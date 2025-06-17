@@ -8,4 +8,9 @@ Selain berisi data pipeline, project ini juga berisi unit test untuk memastikan 
 
 ## Proses Persiapan
 
-Sebelum menjalankan project, lalu instalasi library atau package yang ada pada file `requirements.txt` dengan menjalankan perintah
+Sebelum menjalankan project, lalu instalasi library atau package yang ada pada file `requirements.txt` menggunakan terminal pada IDE atau command prompt anda. Pastikan anda berada di direktori yang sama dengan file `requirements.txt` .
+
+Selanjutnya lakukan perintah
+```bash
+pip install -r requirements.txt
+```
