@@ -9,7 +9,7 @@ def fetching_content(url):
         session = requests.Session()
         response = session.get(url, headers=HEADERS)
         response.raise_for_status()
-        return response.content
+        return response.contents
     except Exception as e:
         print(f"Terjadi kesalahan ketika melakukan requests terhadap {url}: {e}")
         return None
