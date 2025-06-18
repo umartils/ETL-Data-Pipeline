@@ -26,12 +26,12 @@ def extract_products_data(products):
     except AttributeError:
         price = "Price not available"
     
-    paragraphs = products.find_all('p', style="font-size: 14px; color: #777;")
+    section = products.find_all('p', style="font-size: 14px; color: #777;")
 
-    rating = paragraphs[0].text
-    color = paragraphs[1].text
-    size = paragraphs[2].text
-    gender = paragraphs[3].text
+    rating = section[0].text
+    color = section[1].text
+    size = section[2].text
+    gender = section[3].text
 
     fashion = {
         "Title": title,

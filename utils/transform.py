@@ -58,3 +58,20 @@ def clean_data(data):
     except Exception as e:
         print(f"Error in clean_data function: {e}")
         return pd.DataFrame()  # Return empty DataFrame on error
+
+def convert_currency(df, exchange_rate):
+    """Convert prices to local currency using the specified exchange rate."""
+    try:
+        if not isinstance(df, pd.DataFrame):
+            raise ValueError("Input must be a pandas DataFrame")
+        
+        if not isinstance(exchange_rate, (int, float)) or exchange_rate <= 0:
+            raise ValueError("Exchange rate must be a positive number")
+
+        df = df.copy()
+        df['Price'] = df['Price'] * exchange_rate
+        return df
+
+    except Exception as e:
+        print(f"Error in convert_currency function: {e}")
+        return pd.DataFrame()
