@@ -33,3 +33,18 @@ class TestExtractFunctions(unittest.TestCase):
             mock_session.return_value.get.side_effect = Exception("Connection error")
             result = fetching_content('https://invalid-url.com')
             self.assertIsNone(result)
+
+    def test_extract_products_data(self):
+        soup = BeautifulSoup(self.sample_html, 'html.parser')
+        product = soup.find('div', class_='collection-card')
+        result = extract_products_data(product)
+
+        # Test data structure
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result['Title'], 'Test Product')
+        self.assertEqual(result['Price'], '$100')
+        self.assertEqual(result['Rating'], '4.5')
+        self.assertEqual(result['Colors'], 'Red, Blue')
+        self.assertEqual(result['Size'], 'S, M, L')
+        self.assertEqual(result['Gender'], 'Male')
+        self.assertIn('Time', result)
