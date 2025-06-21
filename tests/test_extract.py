@@ -48,3 +48,26 @@ class TestExtractFunctions(unittest.TestCase):
         self.assertEqual(result['Size'], 'S, M, L')
         self.assertEqual(result['Gender'], 'Male')
         self.assertIn('Time', result)
+    
+    @patch('utils.extract.fetching_content')
+    @patch('time.sleep')
+    def test_products_scraping(self, mock_sleep, mock_fetching):
+        # Mock the fetching_content response
+        mock_fetching.return_value = self.sample_html.encode()
+
+        # Test with minimal parameters
+        result = products_scraping(
+            base_url='https://fashion-studio.dicoding.dev/page-{}',
+            start_page=2,
+            end_page=3,
+            delay=0
+        )
+
+        # Verify results
+        self.assertIsInstance(result, list)
+        self.assertTrue(len(result) > 0)
+        self.assertIsInstance(result[0], dict)
+        
+        # Verify correct number of calls
+        self.assertEqual(mock_fetching.call_count, 2)
+        self.assertEqual(mock_sleep.call_count, 2)

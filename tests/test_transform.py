@@ -34,3 +34,24 @@ class TestTransformFunctions(unittest.TestCase):
                 'Time': '2024-05-08T10:00:00'
             }
         ]
+    def test_clean_data(self):
+        # Test clean_data function
+        df_cleaned = clean_data(self.test_data)
+        
+        # Test data type conversions
+        self.assertTrue(df_cleaned['Rating'].dtype == float)
+        self.assertTrue(df_cleaned['Colors'].dtype == int)
+        self.assertTrue(df_cleaned['Price'].dtype == float)
+        
+        # Test data cleaning
+        self.assertEqual(df_cleaned['Rating'].iloc[0], 4.5)
+        self.assertEqual(df_cleaned['Colors'].iloc[0], 2)
+        self.assertEqual(df_cleaned['Price'].iloc[0], 120.50)
+        
+        # Test string cleaning
+        self.assertEqual(df_cleaned['Size'].iloc[0], 'SML')
+        self.assertEqual(df_cleaned['Gender'].iloc[0], 'Male')
+        
+        # Test filtering
+        self.assertTrue(len(df_cleaned) < len(self.test_data))
+        self.assertTrue('Unknown Product' not in df_cleaned['Title'].values)

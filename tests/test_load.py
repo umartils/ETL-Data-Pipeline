@@ -60,3 +60,42 @@ class TestLoadFunctions(unittest.TestCase):
             'postgresql://invalid:invalid@localhost:5432/invaliddb',
             'test_table'
         )
+    
+    @patch('utils.load.pygsheets')
+    def test_load_data_to_google_sheet(self, mock_pygsheets):
+        # Mock pygsheets objects
+        mock_gc = MagicMock()
+        mock_spreadsheet = MagicMock()
+        mock_worksheet = MagicMock()
+        
+        mock_pygsheets.authorize.return_value = mock_gc
+        mock_gc.open_by_key.return_value = mock_spreadsheet
+        mock_spreadsheet.worksheet_by_title.return_value = mock_worksheet
+
+        # Test successful Google Sheets load
+        load_data_to_google_sheet(
+            'test_service_file.json',
+            'test_spreadsheet_id',
+            'Sheet1',
+            self.test_data
+        )
+
+        # Verify calls
+        mock_pygsheets.authorize.assert_called_once_with(
+            service_file='test_service_file.json'
+        )
+        mock_gc.open_by_key.assert_called_once_with('test_spreadsheet_id')
+        
+        # Verify worksheet operations
+        mock_worksheet.clear.assert_called_once()
+        mock_worksheet.set_dataframe.assert_called_once()
+        self.assertEqual(mock_worksheet.frozen_rows, 1)
+
+        # Test error handling for worksheet creation
+        mock_spreadsheet.add_worksheet.side_effect = Exception("Worksheet exists")
+        load_data_to_google_sheet(
+            'test_service_file.json',
+            'test_spreadsheet_id',
+            'Sheet1',
+            self.test_data
+        )
