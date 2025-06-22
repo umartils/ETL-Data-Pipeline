@@ -25,7 +25,7 @@ class TestExtractFunctions(unittest.TestCase):
             mock_response = MagicMock()
             mock_response.content = b"Test content"
             mock_session.return_value.get.return_value = mock_response
-            
+
             result = fetching_content('https://test-url.com')
             self.assertEqual(result, b"Test content")
 
@@ -48,7 +48,7 @@ class TestExtractFunctions(unittest.TestCase):
         self.assertEqual(result['Size'], 'S, M, L')
         self.assertEqual(result['Gender'], 'Male')
         self.assertIn('Time', result)
-    
+
     @patch('utils.extract.fetching_content')
     @patch('time.sleep')
     def test_products_scraping(self, mock_sleep, mock_fetching):

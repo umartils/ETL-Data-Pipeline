@@ -64,7 +64,7 @@ def convert_currency(df, exchange_rate):
     try:
         if not isinstance(df, pd.DataFrame):
             raise ValueError("Input must be a pandas DataFrame")
-        
+
         if not isinstance(exchange_rate, (int, float)) or exchange_rate <= 0:
             raise ValueError("Exchange rate must be a positive number")
 
