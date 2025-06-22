@@ -91,3 +91,30 @@ class TestTransformFunctions(unittest.TestCase):
         ]
         df_missing = clean_data(data_with_missing)
         self.assertTrue(df_missing.empty)
+        
+    def test_error_handling(self):
+        # Test invalid data types
+        invalid_data = [
+            {
+                'Title': None,
+                'Price': None,
+                'Rating': None,
+                'Colors': None,
+                'Size': None,
+                'Gender': None,
+                'Time': None
+            }
+        ]
+        
+        df_result = clean_data(invalid_data)
+        self.assertIsInstance(df_result, pd.DataFrame)
+        
+        # Test invalid exchange rate
+        result = convert_currency(pd.DataFrame(), -1)
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertTrue(result.empty)
+
+        # Test invalid input type
+        result = convert_currency("not a dataframe", 1000)
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertTrue(result.empty)
