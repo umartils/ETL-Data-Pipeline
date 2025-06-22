@@ -55,3 +55,39 @@ class TestTransformFunctions(unittest.TestCase):
         # Test filtering
         self.assertTrue(len(df_cleaned) < len(self.test_data))
         self.assertTrue('Unknown Product' not in df_cleaned['Title'].values)
+    
+    def test_convert_currency(self):
+        # Create test DataFrame
+        df = pd.DataFrame({
+            'Price': [100.0, 200.0, 300.0],
+            'Title': ['Product 1', 'Product 2', 'Product 3']
+        })
+        
+        # Test first conversion
+        df_converted1 = convert_currency(df.copy(), 16000)
+        self.assertEqual(df_converted1['Price'].iloc[0], 100.0 * 16000)
+        
+        # Test second conversion with fresh DataFrame
+        df_converted2 = convert_currency(df.copy(), 15000)
+        self.assertEqual(df_converted2['Price'].iloc[0], 100.0 * 15000)
+
+    def test_edge_cases(self):
+        # Test with empty data
+        empty_data = []
+        df_empty = clean_data(empty_data)
+        self.assertTrue(df_empty.empty)
+        
+        # Test with missing values
+        data_with_missing = [
+            {
+                'Title': 'Test Product',
+                'Price': None,
+                'Rating': None,
+                'Colors': None,
+                'Size': None,
+                'Gender': None,
+                'Time': '2024-05-08T10:00:00'
+            }
+        ]
+        df_missing = clean_data(data_with_missing)
+        self.assertTrue(df_missing.empty)
