@@ -19,13 +19,13 @@ Pipeline ETL ini dirancang untuk memberikan solusi end-to-end dalam pengelolaan 
 ## Arsitektur Pipeline
 
 ```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   EXTRACT   │    │ TRANSFORM   │    │    LOAD     │
-│             │    │             │    │             │
-│ Web Scraping│──▶ │Data Cleaning│───▶│Google Sheets│
-│ Fashion     │    │Standardize  │    │PostgreSQL   │
-│ Studio Site │    │Validation   │    │CSV Files    │
-└─────────────┘    └─────────────┘    └─────────────┘
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   EXTRACT   │     │ TRANSFORM   │     │    LOAD     │
+│             │     │             │     │             │
+│ Web Scraping│───▶ │Data Cleaning│───▶│Google Sheets│
+│ Fashion     │     │Standardize  │     │PostgreSQL   │
+│ Studio Site │     │Validation   │     │CSV Files    │
+└─────────────┘     └─────────────┘     └─────────────┘
 ```
 
 ## Instalasi
